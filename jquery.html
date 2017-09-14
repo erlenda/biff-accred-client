@@ -1,23 +1,36 @@
-var form = new FormData();
-form.append("filename", "Persons.xlsx");
-form.append("apikey", "jezFZeWt4XYwdYtHt6nHbMXgGjeRJepS2pLE9nqeYxMAnAbGVnkeju5MJPWzp6QA");
+<html>
+<body>
+  
+<form id="files" method="post" enctype="multipart/form-data">
+    <input name="excelFile" type="file" />
+    <input name="apikey" type="password" />
+    <button>Submit</button>
+</form>
+  
+<script>
+  $("form#data").submit(function() {
+    var formData = new FormData(this);
+  //form.append("filename", "Persons.xlsx");
+  var settings = {
+    "async": true,
+    "crossDomain": true,
+    "url": "http://accredservice.azurewebsites.net/accred/crunch",
+    "method": "POST",
+    "headers": {
+      "apikey": "jezFZeWt4XYwdYtHt6nHbMXgGjeRJepS2pLE9nqeYxMAnAbGVnkeju5MJPWzp6QA",
+      "cache-control": "no-cache",
+      "postman-token": "2a09ddac-6576-ada6-8c95-506b1015eac4"
+    },
+    "processData": false,
+    "contentType": false,
+    "mimeType": "multipart/form-data",
+    "data": form
+  }
 
-var settings = {
-  "async": true,
-  "crossDomain": true,
-  "url": "http://accredservice.azurewebsites.net/accred/crunch",
-  "method": "POST",
-  "headers": {
-    "apikey": "jezFZeWt4XYwdYtHt6nHbMXgGjeRJepS2pLE9nqeYxMAnAbGVnkeju5MJPWzp6QA",
-    "cache-control": "no-cache",
-    "postman-token": "2a09ddac-6576-ada6-8c95-506b1015eac4"
-  },
-  "processData": false,
-  "contentType": false,
-  "mimeType": "multipart/form-data",
-  "data": form
-}
-
-$.ajax(settings).done(function (response) {
-  console.log(response);
-});
+  $.ajax(settings).done(function (response) {
+    console.log(response);
+  });
+})
+</script>
+</body>
+</html>
