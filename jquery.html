@@ -12,7 +12,9 @@
  
 
 <script>
-  $("form#data").submit(function() {
+  $("form#data").bind('submit', function (e) {
+  //$("form#data").submit(function(e) {
+    e.preventDefault();
     var formData = new FormData(this);
     var apiKey = formData.get("apikey");
   //form.append("filename", "Persons.xlsx");
