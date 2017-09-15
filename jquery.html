@@ -1,5 +1,6 @@
 <html>
   <head>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jszip/3.1.4/jszip.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   </head>
 <body>
@@ -34,7 +35,9 @@
   }
 
   $.ajax(settings).done(function (response) {
-    window.location = 'http://accredservice.azurewebsites.net/accred/crunch';
+    JSZip.loadAsync(response).then(function (zip) {
+        saveAs(zip, "pdfs.zip");
+    });
   });
 })
 </script>
