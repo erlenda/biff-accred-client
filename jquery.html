@@ -38,7 +38,7 @@
   $.ajax(settings).done(function (response) {
     JSZip.loadAsync(response)
     .then(function callback(zip) {
-        saveAs(zip, "pdfs.zip");
+        console.log(zip.files);
     });
   });
 })
