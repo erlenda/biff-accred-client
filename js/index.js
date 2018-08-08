@@ -1,6 +1,14 @@
 $("form#data").bind('submit', function (e) {
     var zip = new JSZip();
 
+    function str2bytes (str) {
+        var bytes = new Uint8Array(str.length);
+        for (var i=0; i<str.length; i++) {
+            bytes[i] = str.charCodeAt(i);
+        }
+        return bytes;
+    }
+
     e.preventDefault();
     var formData = new FormData(this);
     var apiKey = formData.get("apikey");
@@ -19,12 +27,11 @@ $("form#data").bind('submit', function (e) {
       "data": formData
     }
   
-    $.ajax(settings)
-    .then(zip.loadAsync)
-    .then(function(zip) {
-        console.log(zip.files);
-        window.location = zip;
+    $.ajax(settings).done(function(myData) {
+        var blob = new Blob([str2bytes(myData)], {type: "application/zip"});
+        saveAs(blob, "response.zip"); 
     });
+    
       
     // $.ajax(settings).done(function (response) {
     //     zip.loadAsync(response)
