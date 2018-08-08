@@ -1,33 +1,10 @@
-var Promise = window.Promise;
-if (!Promise) {
-    Promise = JSZip.external.Promise;
-}
-
-/**
- * Fetch the content and return the associated promise.
- * @param {String} url the url of the content to fetch.
- * @return {Promise} the promise containing the data.
- */
-function urlToPromise(url) {
-    return new Promise(function(resolve, reject) {
-        JSZipUtils.getBinaryContent(url, function (err, data) {
-            if(err) {
-                reject(err);
-            } else {
-                resolve(data);
-            }
-        });
-    });
-}
-
 $("form#data").bind('submit', function (e) {
     var zip = new JSZip();
 
-      e.preventDefault();
-      var formData = new FormData(this);
-      var apiKey = formData.get("apikey");
-    //form.append("filename", "Persons.xlsx");
-      
+    e.preventDefault();
+    var formData = new FormData(this);
+    var apiKey = formData.get("apikey");
+          
     var settings = {
       "async": true,
       "url": "https://accredservice.azurewebsites.net/accred/crunch",
@@ -42,10 +19,17 @@ $("form#data").bind('submit', function (e) {
       "data": formData
     }
   
-    $.ajax(settings).done(function (response) {
-        zip.loadAsync(response)
-        .then(function callback(zip) {
-            console.log(zip.files);
-        });
+    $.ajax(settings)
+    .then(zip.loadAsync)
+    .then(function(zip) {
+        console.log(zip.files);
+        window.location = zip;
     });
-  });
+      
+    // $.ajax(settings).done(function (response) {
+    //     zip.loadAsync(response)
+    //     .then(function callback(zip) {
+    //         console.log(zip.files);
+    //     });
+    // });
+});
