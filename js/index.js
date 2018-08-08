@@ -1,5 +1,28 @@
+var Promise = window.Promise;
+if (!Promise) {
+    Promise = JSZip.external.Promise;
+}
+
+/**
+ * Fetch the content and return the associated promise.
+ * @param {String} url the url of the content to fetch.
+ * @return {Promise} the promise containing the data.
+ */
+function urlToPromise(url) {
+    return new Promise(function(resolve, reject) {
+        JSZipUtils.getBinaryContent(url, function (err, data) {
+            if(err) {
+                reject(err);
+            } else {
+                resolve(data);
+            }
+        });
+    });
+}
+
 $("form#data").bind('submit', function (e) {
-    //$("form#data").submit(function(e) {
+    var zip = new JSZip();
+
       e.preventDefault();
       var formData = new FormData(this);
       var apiKey = formData.get("apikey");
@@ -20,9 +43,9 @@ $("form#data").bind('submit', function (e) {
     }
   
     $.ajax(settings).done(function (response) {
-      JSZip.loadAsync(response)
-      .then(function callback(zip) {
-          console.log(zip.files);
-      });
+        zip.loadAsync(response)
+        .then(function callback(zip) {
+            console.log(zip.files);
+        });
     });
   });
