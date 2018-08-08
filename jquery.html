@@ -2,7 +2,7 @@
   <head>
     <script src="//fastcdn.org/FileSaver.js/1.1.20151003/FileSaver.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jszip/3.1.4/jszip.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>    
   </head>
 <body>
   
@@ -11,37 +11,7 @@
     <input name="apikey" type="password" />
     <button>Submit</button>
 </form>
- 
 
-<script>
-  $("form#data").bind('submit', function (e) {
-  //$("form#data").submit(function(e) {
-    e.preventDefault();
-    var formData = new FormData(this);
-    var apiKey = formData.get("apikey");
-  //form.append("filename", "Persons.xlsx");
-    
-  var settings = {
-    "async": true,
-    "url": "https://accredservice.azurewebsites.net/accred/crunch",
-    "method": "POST",
-    "headers": {
-      "apikey": apiKey,
-      "cache-control": "no-cache"
-    },
-    "processData": false,
-    "contentType": false,
-    "mimeType": "multipart/form-data",
-    "data": formData
-  }
-
-  $.ajax(settings).done(function (response) {
-    JSZip.loadAsync(response)
-    .then(function callback(zip) {
-        console.log(zip.files);
-    });
-  });
-})
-</script>
+<script src="js/index.js"></script> 
 </body>
 </html>
